@@ -14,7 +14,7 @@ export default () => {
   const [minEmployee, setMinEmployee] = useState("");
   const [minimumDealAmount, setMinimumDealAmount] = useState("");
 
-  const [filtersChanged, setFiltersChanged] = useState(false);
+  const [filtersChanged, setFiltersChanged] = useState(true);
 
   // Update filter state setters to also set filtersChanged to true
   const handleCompanyNameChange = (e) => {
@@ -54,9 +54,7 @@ export default () => {
 
   // Fetch companies from API
   useEffect(() => {
-    console.log('filtersChanged', filtersChanged);
     if (filtersChanged) {
-      console.log('fetching companies', companyName, industry, minEmployee, minimumDealAmount);
       const url = `/api/v1/companies?name=${companyName}&industry=${industry}&min_employee=${minEmployee}&minimum_deal_amount=${minimumDealAmount}`;
       setCompanyListFromAPI(url);
       setFiltersChanged(false);
