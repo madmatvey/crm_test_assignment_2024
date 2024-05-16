@@ -1,6 +1,47 @@
-inherit_from: .rubocop_todo.yml
-
-require: 
+# .rubocop.yml
+require:
   - rubocop-rails
   - rubocop-performance
   - rubocop-migration
+
+inherit_from: 
+  - .rubocop_todo.yml
+
+AllCops:
+  TargetRailsVersion: 7.0
+  TargetRubyVersion: 3.2
+
+Migration/AddCheckConstraint:
+  Enabled: true 
+Migration/AddColumnWithDefaultValue:
+  Enabled: true 
+Migration/AddForeignKey:
+  Enabled: true 
+Migration/AddIndexColumnsCount:
+  Enabled: true 
+Migration/AddIndexConcurrently:
+  Enabled: true 
+Migration/AddIndexDuplicate:
+  Enabled: true 
+Migration/BatchInBatches:
+  Enabled: true 
+Migration/BatchInTransaction:
+  Enabled: true 
+Migration/BatchWithThrottling:
+  Enabled: true 
+Migration/ChangeColumn:
+  Enabled: true 
+Migration/ChangeColumnNull:
+  Enabled: true 
+Migration/CreateTableForce:
+  Enabled: true 
+Migration/Jsonb:
+  Enabled: true 
+Migration/RemoveColumn:
+  Enabled: true 
+Migration/RenameColumn:
+  Enabled: true 
+Migration/RenameTable:
+  Enabled: true 
+Migration/ReservedWordMysql:
+  Enabled: true
