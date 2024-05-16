@@ -4,8 +4,14 @@ module Api
   module V1
     class CompaniesController < ApplicationController
       def index
-        companies = Companies::Finder.call(params)
-        render json: companies.as_json(include: :deals)
+        result = Companies::Finder.call(params: company_params)
+
+        if result.success?
+          companies = result.companies
+          render json: companies.as_json(include: :deals)
+        else
+          render json: { error: result.message }, status: :unprocessable_entity
+        end
       end
 
       private

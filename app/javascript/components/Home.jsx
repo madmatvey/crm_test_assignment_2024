@@ -15,6 +15,7 @@ export default () => {
   const [minimumDealAmount, setMinimumDealAmount] = useState("");
 
   const [filtersChanged, setFiltersChanged] = useState(true);
+  const [error, setError] = useState(null);
 
   // Update filter state setters to also set filtersChanged to true
   const handleCompanyNameChange = (e) => {
@@ -41,14 +42,20 @@ export default () => {
     fetch(url)
       .then((res) => {
         if (!res.ok) {
-          throw new Error('Network response was not ok');
+          console.error('API response was not ok (status code:', res.status, ')');
         }
         return res.json();
       })
-      .then((res) => setCompanies(res))
+      .then((res) => {
+        if (res.error) {
+          throw new Error(res.error);
+        } else {
+          setCompanies(res);
+          setError(null);
+        }
+      })
       .catch((error) => {
-        console.error('Error fetching data:', error);
-        // Handle error, e.g., show a message to the user
+        setError(error.message); 
       });
   };
 
@@ -66,6 +73,8 @@ export default () => {
       <div className="jumbotron jumbotron-fluid bg-transparent">
         <div className="container secondary-color">
           <h1 className="display-4">Companies</h1>
+
+          {error && <div className="alert alert-danger" role="alert">{error}</div>}
 
           <label htmlFor="company-name">Company Name</label>
           <div className="input-group mb-3">
