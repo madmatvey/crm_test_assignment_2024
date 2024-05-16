@@ -3,6 +3,8 @@ require:
   - rubocop-rails
   - rubocop-performance
   - rubocop-migration
+  - rubocop-rspec_rails
+  - rubocop-factory_bot
 
 inherit_from: 
   - .rubocop_todo.yml
@@ -45,3 +47,6 @@ Migration/RenameTable:
   Enabled: true 
 Migration/ReservedWordMysql:
   Enabled: true
+
+Metrics/BlockLength:
+  AllowedMethods: ['describe', 'context']
