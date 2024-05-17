@@ -11,10 +11,10 @@ Your primary task with this homework assignment is to resolve the user stories b
 *Estimated time to completion: 3-4 hours*
 
 ## User Stories
-- [ ] The frontend is not properly fetching data, i.e. filters aren't being sent, requests are being sent too often, non-successful response codes aren't being handled, etc.
-- [ ] The backend is taking too long to return the expected data, i.e.  filters aren't being applied, too much data is being returned, db performance isn't optimized, etc.
-- [ ] The confidence in our current functionality and ability to deploy additional changes is extremely low.  Help us increase our confidence in an automated way.
-- [ ] The confidence in our security posture is also very low.  Help us increase our confidence that we are running a securely designed application.
+- [x] The frontend is not properly fetching data, i.e. filters aren't being sent, requests are being sent too often, non-successful response codes aren't being handled, etc.
+- [x] The backend is taking too long to return the expected data, i.e.  filters aren't being applied, too much data is being returned, db performance isn't optimized, etc.
+- [x] The confidence in our current functionality and ability to deploy additional changes is extremely low.  Help us increase our confidence in an automated way.
+- [x] The confidence in our security posture is also very low.  Help us increase our confidence that we are running a securely designed application.
 
 ## Assumptions
 

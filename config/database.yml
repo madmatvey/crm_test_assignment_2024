@@ -11,11 +11,14 @@
 #
 default: &default
   adapter: mysql2
+  # If I had more time, I would move the project database to PostgreSQL. 
+  # In my opinion postgres has a more developed ecosystem of solutions for query monitoring and optimisation. 
   encoding: utf8mb4
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  username: root
-  password:
-  socket: /tmp/mysql.sock
+  username: rails_user
+  password: password
+  host: 127.0.0.1
+  port: 3307
 
 development:
   <<: *default

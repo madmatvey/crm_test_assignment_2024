@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from "react";
 
+// If I had more time, I would add the use of the state manager library here. 
+// The author of the article on choosing a state manager 
+// https://dev.to/nguyenhongphat0/react-state-management-in-2024-5e7l resonates with me.
+
 export default () => {
   // List of fetched companies
   const [companies, setCompanies] = useState([]);
@@ -10,15 +14,59 @@ export default () => {
   const [minEmployee, setMinEmployee] = useState("");
   const [minimumDealAmount, setMinimumDealAmount] = useState("");
 
-  // Fetch companies from API
-  useEffect(() => {
-    const url = "/api/v1/companies";
+  const [filtersChanged, setFiltersChanged] = useState(true);
+  const [error, setError] = useState(null);
+
+  // Update filter state setters to also set filtersChanged to true
+  const handleCompanyNameChange = (e) => {
+    setCompanyName(e.target.value);
+    setFiltersChanged(true);
+  };
+  
+  const handleIndustryChange = (e) => {
+    setIndustry(e.target.value);
+    setFiltersChanged(true);
+  };
+
+  const handleMinEmployeeChange = (e) => {
+    setMinEmployee(e.target.value);
+    setFiltersChanged(true);
+  };
+
+  const handleMinimumDealAmountChange = (e) => {
+    setMinimumDealAmount(e.target.value);
+    setFiltersChanged(true);
+  };
+
+  const setCompanyListFromAPI = (url) => {
     fetch(url)
       .then((res) => {
+        if (!res.ok) {
+          console.error('API response was not ok (status code:', res.status, ')');
+        }
         return res.json();
       })
-      .then((res) => setCompanies(res))
-  }, [])
+      .then((res) => {
+        if (res.error) {
+          throw new Error(res.error);
+        } else {
+          setCompanies(res);
+          setError(null);
+        }
+      })
+      .catch((error) => {
+        setError(error.message); 
+      });
+  };
+
+  // Fetch companies from API
+  useEffect(() => {
+    if (filtersChanged) {
+      const url = `/api/v1/companies?name=${companyName}&industry=${industry}&min_employee=${minEmployee}&minimum_deal_amount=${minimumDealAmount}`;
+      setCompanyListFromAPI(url);
+      setFiltersChanged(false);
+    };
+  }, [filtersChanged, companyName, industry, minEmployee, minimumDealAmount]);
 
   return (
     <div className="vw-100 primary-color d-flex align-items-center justify-content-center">
@@ -26,24 +74,26 @@ export default () => {
         <div className="container secondary-color">
           <h1 className="display-4">Companies</h1>
 
+          {error && <div className="alert alert-danger" role="alert">{error}</div>}
+
           <label htmlFor="company-name">Company Name</label>
           <div className="input-group mb-3">
-            <input type="text" className="form-control" id="company-name" value={companyName} onChange={e => setCompanyName(e.target.value)} />
+            <input type="text" className="form-control" id="company-name" value={companyName} onChange={e => handleCompanyNameChange(e)} />
           </div>
 
           <label htmlFor="industry">Industry</label>
           <div className="input-group mb-3">
-            <input type="text" className="form-control" id="industry" value={industry} onChange={e => setIndustry(e.target.value)} />
+            <input type="text" className="form-control" id="industry" value={industry} onChange={e => handleIndustryChange(e)} />
           </div>
 
           <label htmlFor="min-employee">Minimum Employee Count</label>
           <div className="input-group mb-3">
-            <input type="text" className="form-control" id="min-employee" value={minEmployee} onChange={e => setMinEmployee(e.target.value)} />
+            <input type="text" className="form-control" id="min-employee" value={minEmployee} onChange={e => handleMinEmployeeChange(e)} />
           </div>
 
           <label htmlFor="min-amount">Minimum Deal Amount</label>
           <div className="input-group mb-3">
-            <input type="text" className="form-control" id="min-amount" value={minimumDealAmount} onChange={e => setMinimumDealAmount(e.target.value)} />
+            <input type="text" className="form-control" id="min-amount" value={minimumDealAmount} onChange={e => handleMinimumDealAmountChange(e)} />
           </div>
 
           <table className="table">
