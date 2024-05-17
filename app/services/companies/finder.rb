@@ -44,7 +44,7 @@ module Companies
       if minimum_deal_amount.present?
         context.fail!(message: 'Minimum deal amount should be an integer') unless numeric?(minimum_deal_amount)
 
-        sql = <<~SQL
+        sql = <<~SQL.squish
           select
             companies.*
           from companies

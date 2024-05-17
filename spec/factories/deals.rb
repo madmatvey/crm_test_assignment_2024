@@ -5,6 +5,6 @@ FactoryBot.define do
     sequence(:name) { |n| "Deal #{n}" }
     amount { rand(10..1000) }
     status { %w[pending won lost].sample }
-    association :company
+    company
   end
 end

@@ -7,7 +7,7 @@ RSpec.describe 'FilterCompanies', type: :request do
     subject(:companies_filter_request) { get api_v1_companies_path, params: }
 
     context 'when there are no companies' do
-      let(:params) {}
+      let(:params) {} # rubocop:disable Lint/EmptyBlock
 
       it 'works!' do
         subject
@@ -29,7 +29,7 @@ RSpec.describe 'FilterCompanies', type: :request do
         it 'works!' do
           subject
           expect(response).to have_http_status(:ok)
-          names = parsed_json.map { |company| company[:name] }
+          names = parsed_json.pluck(:name)
           expect(names).to include('Company1')
           expect(names).not_to include('Company2')
         end
@@ -41,7 +41,7 @@ RSpec.describe 'FilterCompanies', type: :request do
         it 'works!' do
           subject
           expect(response).to have_http_status(:ok)
-          names = parsed_json.map { |company| company[:name] }
+          names = parsed_json.pluck(:name)
 
           expect(names).to include('Company2')
           expect(names).not_to include('Company1')
@@ -54,7 +54,7 @@ RSpec.describe 'FilterCompanies', type: :request do
         it 'works!' do
           subject
           expect(response).to have_http_status(:ok)
-          names = parsed_json.map { |company| company[:name] }
+          names = parsed_json.pluck(:name)
           expect(names).to include('Company2')
           expect(names).not_to include('Company1')
         end
@@ -68,7 +68,7 @@ RSpec.describe 'FilterCompanies', type: :request do
         it 'works!' do
           subject
           expect(response).to have_http_status(:ok)
-          names = parsed_json.map { |company| company[:name] }
+          names = parsed_json.pluck(:name)
           expect(names).to include('Company2')
           expect(names).not_to include('Company1')
         end
@@ -82,7 +82,7 @@ RSpec.describe 'FilterCompanies', type: :request do
         it 'works!' do
           subject
           expect(response).to have_http_status(:ok)
-          names = parsed_json.map { |company| company[:name] }
+          names = parsed_json.pluck(:name)
           expect(names).to include('Company2')
           expect(names).not_to include('Company1')
         end
